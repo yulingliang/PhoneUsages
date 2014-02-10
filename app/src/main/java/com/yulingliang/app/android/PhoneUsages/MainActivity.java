@@ -1,5 +1,6 @@
 package com.yulingliang.app.android.PhoneUsages;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -48,7 +50,6 @@ public class MainActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-
         public PlaceholderFragment() {
         }
 
@@ -56,6 +57,25 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            Button startButton = (Button) rootView.findViewById(R.id.start_button);
+            startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent service = new Intent(getActivity(), ScreenStatusListenerService.class);
+                    getActivity().startService(service);
+                }
+            });
+
+            Button stopButton = (Button) rootView.findViewById(R.id.stop_button);
+            stopButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent service = new Intent(getActivity(), ScreenStatusListenerService.class);
+                    getActivity().stopService(service);
+                }
+            });
+
             return rootView;
         }
     }

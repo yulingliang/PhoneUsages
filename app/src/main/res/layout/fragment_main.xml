@@ -11,6 +11,20 @@
     <TextView
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"/>
+    <Button
+        android:id="@+id/start_button"
+        android:text="@string/start_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"/>
+    <Button
+        android:id="@+id/stop_button"
+        android:text="@string/stop_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/start_button"
+        android:layout_toRightOf="@+id/start_button"/>
 
 </RelativeLayout>
