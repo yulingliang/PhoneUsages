@@ -1,6 +1,8 @@
 package com.yulingliang.app.android.PhoneUsages;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -24,7 +27,6 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,15 +52,17 @@ public class MainActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private View mRootView;
+
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            Button startButton = (Button) rootView.findViewById(R.id.start_button);
+            Button startButton = (Button) mRootView.findViewById(R.id.start_button);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
 
-            Button stopButton = (Button) rootView.findViewById(R.id.stop_button);
+            Button stopButton = (Button) mRootView.findViewById(R.id.stop_button);
             stopButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,8 +80,31 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
 
-            return rootView;
+
+            updateStats(mRootView);
+
+            return mRootView;
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            updateStats(mRootView);
+        }
+
+        private void updateStats(View rootView) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            int numScreenOn = pref.getInt(Constants.PREF_NUM_SCREEN_ON, 0);
+            int numUnlock = pref.getInt(Constants.PREF_NUM_UNLOCK, 0);
+
+            TextView numScreenOnView = (TextView) rootView.findViewById(R.id.num_screen_on);
+            numScreenOnView.setText(getString(R.string.num_screen_on, numScreenOn));
+
+            TextView numUnlockView = (TextView) rootView.findViewById(R.id.num_actual_use);
+            numUnlockView.setText(getString(R.string.num_unlock, numUnlock));
+        }
+
+
     }
 
 }
