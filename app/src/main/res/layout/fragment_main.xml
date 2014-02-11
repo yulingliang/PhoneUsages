@@ -10,10 +10,10 @@
 
     <TextView
         android:id="@+id/today"
-        android:text="@string/hello_world"
+        android:text="@string/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="35dp"
         android:fontFamily="sans-serif-light"/>
     <TextView
         android:id="@+id/num_screen_on"
@@ -23,7 +23,8 @@
         android:layout_below="@+id/today"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:fontFamily="sans-serif-light"/>
+        android:fontFamily="sans-serif-light"
+        android:textSize="20dp"/>
     <TextView
         android:id="@+id/num_actual_use"
         android:text="Actually use the phone:"
@@ -32,7 +33,15 @@
         android:layout_below="@+id/num_screen_on"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:fontFamily="sans-serif-light"/>
+        android:fontFamily="sans-serif-light"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/service_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:layout_above="@+id/start_button"
+        android:textSize="18dp"/>
     <Button
         android:id="@+id/start_button"
         android:text="@string/start_service"
