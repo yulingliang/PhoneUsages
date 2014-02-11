@@ -16,11 +16,12 @@ public class ScreenStatusBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
-            mTime.setToNow();
+        mTime.setToNow();
+        if(Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
+            Log.d(TAG, mTime.format(mTimeFormat) + ": Screen is UNLOCK");
+        } else if(Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
             Log.d(TAG, mTime.format(mTimeFormat) + ": Screen is ON");
         } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-            mTime.setToNow();
             Log.d(TAG, mTime.format(mTimeFormat) + ": Screen is OFF");
         }
     }
