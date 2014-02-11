@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,6 +72,10 @@ public class MainActivity extends ActionBarActivity {
             mRootView = inflater.inflate(R.layout.fragment_main, container, false);
             mPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+            // TODO: This is problematic since I am updating shared prefs via the background
+            // service which means the activity might be killed already. So fragment will throw
+            // exceptions saying it can't attach to activity. A better way to do soe might be do
+            // the listener on the Activity class instead.
             mPref.registerOnSharedPreferenceChangeListener(
                     new SharedPreferences.OnSharedPreferenceChangeListener() {
                         @Override
@@ -80,6 +85,15 @@ public class MainActivity extends ActionBarActivity {
                             updateStats();
                         }
                     });
+
+            // If the app is started for the first time, add the current time as last unlock time.
+            // So that usage calculation can happen right away.
+            long lastUnlockTime = mPref.getLong(Constants.PREF_LAST_UNLOCK_TIME_MS, 0);
+            if(lastUnlockTime == 0) {
+                Time time = new Time(Time.getCurrentTimezone());
+                time.setToNow();
+                mPref.edit().putLong(Constants.PREF_LAST_UNLOCK_TIME_MS, time.toMillis(false));
+            }
 
             Button startButton = (Button) mRootView.findViewById(R.id.start_button);
             startButton.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
                     mPref.edit()
                             .putInt(Constants.PREF_NUM_SCREEN_ON, 0)
                             .putInt(Constants.PREF_NUM_UNLOCK, 0)
+                            .putLong(Constants.PREF_LONGEST_USE_TIME_MS, 0)
                             .commit();
                     updateStats();
                 }
@@ -125,12 +140,16 @@ public class MainActivity extends ActionBarActivity {
         private void updateStats() {
             int numScreenOn = mPref.getInt(Constants.PREF_NUM_SCREEN_ON, 0);
             int numUnlock = mPref.getInt(Constants.PREF_NUM_UNLOCK, 0);
+            long longestUsageTime = mPref.getLong(Constants.PREF_LONGEST_USE_TIME_MS, 0);
 
             TextView numScreenOnView = (TextView) mRootView.findViewById(R.id.num_screen_on);
             numScreenOnView.setText(getString(R.string.num_screen_on, numScreenOn));
 
             TextView numUnlockView = (TextView) mRootView.findViewById(R.id.num_actual_use);
             numUnlockView.setText(getString(R.string.num_unlock, numUnlock));
+
+            TextView longestUsageView = (TextView) mRootView.findViewById(R.id.longest_usage_time);
+            longestUsageView.setText(getString(R.string.longest_usage, longestUsageTime / 1000));
 
             TextView serviceStatus = (TextView) mRootView.findViewById(R.id.service_status);
             if(isListenerServiceRunning()) {

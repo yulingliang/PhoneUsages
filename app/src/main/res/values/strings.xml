@@ -9,6 +9,7 @@
     <string name="reset_stats">Reset</string>
     <string name="num_screen_on">You turn Screen on for %1$d times</string>
     <string name="num_unlock">You unlock it for %1$d times</string>
+    <string name="longest_usage">Longest usage time is %1$d seconds</string>
     <string name="service_running">Service is running.</string>
     <string name="service_stopped">Service is stopped.</string>
 

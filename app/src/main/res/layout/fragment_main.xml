@@ -17,7 +17,7 @@
         android:fontFamily="sans-serif-light"/>
     <TextView
         android:id="@+id/num_screen_on"
-        android:text="Screen On:"
+        android:text="@string/num_screen_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/today"
@@ -27,10 +27,20 @@
         android:textSize="20dp"/>
     <TextView
         android:id="@+id/num_actual_use"
-        android:text="Actually use the phone:"
+        android:text="@string/num_unlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/num_screen_on"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="sans-serif-light"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/longest_usage_time"
+        android:text="@string/longest_usage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/num_actual_use"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:fontFamily="sans-serif-light"
