@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -149,7 +150,8 @@ public class MainActivity extends ActionBarActivity {
             numUnlockView.setText(getString(R.string.num_unlock, numUnlock));
 
             TextView longestUsageView = (TextView) mRootView.findViewById(R.id.longest_usage_time);
-            longestUsageView.setText(getString(R.string.longest_usage, longestUsageTime / 1000));
+            longestUsageView.setText(getString(R.string.longest_usage,
+                    longestUsageTime / (60 * 1000)));
 
             TextView serviceStatus = (TextView) mRootView.findViewById(R.id.service_status);
             if(isListenerServiceRunning()) {

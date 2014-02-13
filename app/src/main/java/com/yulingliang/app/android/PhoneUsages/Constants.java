@@ -8,4 +8,5 @@ public class Constants {
     public static final String PREF_NUM_UNLOCK = "num_unlock";
     public static final String PREF_LAST_UNLOCK_TIME_MS = "last_unlock_time_ms";
     public static final String PREF_LONGEST_USE_TIME_MS = "longest_use_time_ms";
+    public static final int FOREGROUND_NOTIFICATION_ID = 250;
 }

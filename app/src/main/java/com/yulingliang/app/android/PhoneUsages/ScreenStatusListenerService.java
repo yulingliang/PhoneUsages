@@ -1,9 +1,11 @@
 package com.yulingliang.app.android.PhoneUsages;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class ScreenStatusListenerService extends Service {
@@ -36,6 +38,12 @@ public class ScreenStatusListenerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText("It is fitbit for your phone")
+                .build();
+        startForeground(Constants.FOREGROUND_NOTIFICATION_ID, notification);
         return START_STICKY;
     }
 
